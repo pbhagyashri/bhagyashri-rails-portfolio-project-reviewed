@@ -1,0 +1,4 @@
+<h2>Taste Rating: <%= @review.taste_rating %></h2>
+<% @review.restaurants.each do |restaurant| %>
+  <%= restaurant.name %>
+<% end %>

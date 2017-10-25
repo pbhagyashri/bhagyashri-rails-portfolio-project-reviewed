@@ -1,2 +1,48 @@
-<h1>Reviews#new</h1>
-<p>Find me in app/views/reviews/new.html.erb</p>
+<h1>Write a Review!</h1>
+
+<%= form_for(@review) do |f| %>
+  <p>
+    <%= f.label :taste_rating %>
+    <%= f.select(:taste_rating, options_for_select((1..5), {:selected => @review.taste_rating}), :prompt => "Select") %>
+  </p>
+
+  <p>
+    <%= f.label :health_rating %>
+    <%= f.select(:health_rating, options_for_select((1..5), {:selected => @review.health_rating}), :prompt => "Select") %>
+  </p>
+
+  <p>
+    <%= f.label :description %>
+    <%= f.text_area :description, size: "20x3" %>
+  </p>
+
+  <h3>Choose from existing Restaurants</h3>
+
+  <p>
+    <%= f.collection_check_boxes(:restaurant_ids, Restaurant.all, :id, :name) %>
+  </p>
+
+  <h3>Or Create a new One!</h3>
+
+    <%= f.fields_for :restaurants, @restaurant do |restaurant_builder| %>
+      <p>
+        <%= restaurant_builder.label :Name %>
+        <%= restaurant_builder.text_field :name %>
+      </p>
+
+      <p>
+        <%= restaurant_builder.label :Location %>
+        <%= restaurant_builder.text_field :location %>
+      </p>
+
+      <p>
+        <%= restaurant_builder.label :cuisine %>
+        <%= restaurant_builder.text_field :cuisine %>
+      </P>
+
+      <%= restaurant_builder.hidden_field :user_id, :value => current_user.id %>
+
+    <% end %>
+
+  <%= f.submit %>
+<% end %>

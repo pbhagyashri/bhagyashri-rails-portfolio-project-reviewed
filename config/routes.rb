@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'restaurants#index'
 
   resources :restaurant
-  resources :review
+  resources :reviews
 
   get 'signup' => 'users#new', as: :signup
   post 'users' => 'users#create', as: :users
